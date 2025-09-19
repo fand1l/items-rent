@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ item.name }}</h1>
+<p>Категорія: {{ item.get_category_display }}</p>
+<p>Ціна/доба: {{ item.price_per_day }} ₴</p>
+<p>Застава: {{ item.deposit }} ₴</p>
+<p>Статус: {% if item.is_active %}Доступний{% else %}Недоступний{% endif %}</p>
+
+<h2>Оформити оренду</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Забронювати</button>
+</form>
+
+{% if last_rentals %}
+    <h3>Останні оренди цього предмета</h3>
+    <ul>
+        {% for rental in last_rentals %}
+            <li>{{ rental.start_date }} — {{ rental.end_date }} ({{ rental.status }})</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<a href="{% url 'items_list' %}">← До каталогу</a>
+{% endblock %}

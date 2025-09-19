@@ -15,9 +15,13 @@ class TimeStampedModel(models.Model):
 
 
 class Item(models.Model):
-    CATAGORY_CHOICES = [("camera", "Camera"), ("tripod", "Tripod"), ("drone", "Drone")]
+    CATEGORY_CHOICES = [
+        ("camera", "Camera"),
+        ("tripod", "Tripod"),
+        ("drone", "Drone"),
+    ]
     name = models.CharField(max_length=200)
-    category = models.CharField(max_length=50, choices=CATAGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     price_per_day = models.DecimalField(max_digits=8, decimal_places=2)
     deposit = models.DecimalField(max_digits=8, decimal_places=2)
     is_active = models.BooleanField(default=True)
@@ -27,7 +31,11 @@ class Item(models.Model):
         verbose_name = "Предмет"
         verbose_name_plural = "Предмети"
         ordering = ["name"]
-        indexes = [models.Index(fields=["name"])]
+        indexes = [
+            models.Index(fields=["name"]),
+            models.Index(fields=["category"]),
+            models.Index(fields=["is_active"]),
+        ]
 
     def __str__(self):
         return self.name
@@ -39,11 +47,11 @@ class Rental(TimeStampedModel):
         ("approved", "Approved"),
         ("active", "Active"),
         ("returned", "Returned"),
-        ("canceled", "Canceled"),
+        ("cancelled", "Cancelled"),
         ("overdue", "Overdue"),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.PROTECT)
     start_date = models.DateField()
     end_date = models.DateField()
     status = models.CharField(choices=STATUS_CHOICES, default="pending", max_length=20)
@@ -55,7 +63,12 @@ class Rental(TimeStampedModel):
         verbose_name = "Оренда"
         verbose_name_plural = "Оренди"
         ordering = ["status"]
-        indexes = [models.Index(fields=["id"])]
+        indexes = [
+            models.Index(fields=["id"]),
+            models.Index(fields=["item", "start_date"]),
+            models.Index(fields=["item", "end_date"]),
+            models.Index(fields=["status"]),
+        ]
 
     def __str__(self):
         return self.status
@@ -65,7 +78,7 @@ class DamageReport(models.Model):
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     note = models.TextField()
     fee = models.DecimalField(max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.note

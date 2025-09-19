@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Мої оренди</h1>
+
+<ul>
+    {% for rental in rentals %}
+        <li>
+            <strong>{{ rental.item.name }}</strong> <br>
+            {{ rental.start_date }} — {{ rental.end_date }}<br>
+            Статус: {{ rental.get_status_display }}
+            {% if rental.status != "cancelled" %}
+                <form action="{% url 'rental_cancel' rental.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Скасувати</button>
+                </form>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>У вас немає оренд.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'items_list' %}">← До каталогу</a>
+{% endblock %}

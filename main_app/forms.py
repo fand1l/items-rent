@@ -1,10 +1,11 @@
 from django import forms
 from .models import Rental
 
-class RentalForm(froms.ModelForm):
+class RentalForm(forms.ModelForm):
     class Meta:
         model = Rental
-        fields = ("")
+        fields = ["start_date", "end_date"]
         widgets = {
-            
+            "start_date": forms.DateInput(attrs={"type": "date"}),
+            "end_date": forms.DateInput(attrs={"type": "date"}),
         }
