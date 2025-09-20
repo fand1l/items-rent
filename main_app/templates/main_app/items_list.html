@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Каталог предметів</h1>
+<div class="alert alert-warning" role="alert">Fix item rent, Add styles in other html</div>
+<h1 style="text-align: center; padding: 10px;">Каталог предметів</h1>
 
-<form method="get">
-    <input type="text" name="q" value="{{ q }}" placeholder="Пошук по назві...">
-    <select name="cat">
+<form method="get" class="row gy-2 gx-3 aling-items-end mb-3">
+    <input class="form-control" type="text" name="q" value="{{ q }}" placeholder="Пошук за назвою..." style="margin-left: 5%; margin-right: 5%; width: 90%;">
+    <select class="form-control" name="cat" style="margin-left: 5%; margin-right: 5%; width: 90%;">
         <option value="">Всі категорії</option>
         {% for category in categories %}
             <option value="{{ category }}" {% if cat == category %}selected{% endif %}>{{ category }}</option>
         {% endfor %}
     </select>
-    <button type="submit">Фільтрувати</button>
+    <button type="submit" class="btn btn-primary" style="margin-left: 5%; margin-right: 5%; width: 90%;">Фільтрувати</button>
 </form>
 
 <div class="container">
@@ -19,9 +20,12 @@
             <div class="col">
                 <div class="h-100">
                     <div class="card">
+                        <div class="card-header">
+                            {{ item.get_category_display }}
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ item.name }}</h5>
-                            <p class="card-text">{{ item.get_category_display }} — {{ item.price_per_day }} ₴/доба</p>
+                            <p class="card-text"><b style="color: steelblue;">{{ item.price_per_day }}</b> ₴/доба</p>
                             <a href="{% url 'main_app:items_detail' item.pk %}" class="btn btn-primary">Деталі</a>
                         </div>
                     </div>
