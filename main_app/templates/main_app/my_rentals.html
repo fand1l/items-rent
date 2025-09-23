@@ -1,23 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Мої оренди</h1>
+<h1 style="text-align: center; padding: 10px;">Мої оренди</h1>
 
-<ul>
-    {% for rental in rentals %}
-        <li>
-            <strong>{{ rental.item.name }}</strong> <br>
-            {{ rental.start_date }} — {{ rental.end_date }}<br>
-            Статус: {{ rental.get_status_display }}
-            {% if rental.status != "cancelled" %}
-                <form action="{% url 'main_app:rental_cancel' rental.pk %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Скасувати</button>
-                </form>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>У вас немає оренд.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'main_app:items_list' %}">← До каталогу</a>
+<div class="container mb-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        {% for rental in rentals %}
+        <div class="col">
+            <div class="h-100">
+                <div class="card border-secondary">
+                    <div class="card-header">
+                        {{ rental.item.get_category_display }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ rental.item.name }}</h5>
+                        <p class="card-text">
+                            <b>Період:</b> {{ rental.start_date }} — {{ rental.end_date }}<br>
+                            <b>Статус:</b> 
+                            <span class="{% if rental.status == 'active' %}text-success{% elif rental.status == 'pending' %}text-warning{% elif rental.status == 'cancelled' %}text-danger{% endif %}">
+                                {{ rental.get_status_display }}
+                            </span>
+                        </p>
+                        {% if rental.status != "cancelled" %}
+                        <form action="{% url 'main_app:rental_cancel' rental.pk %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Скасувати</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <div class="alert alert-info text-center" role="alert">
+                У вас немає оренд.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mt-4 text-center">
+        <a href="{% url 'main_app:items_list' %}" class="btn btn-secondary">← До каталогу</a>
+    </div>
+</div>
 {% endblock %}
