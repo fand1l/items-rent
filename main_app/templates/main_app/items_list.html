@@ -3,7 +3,6 @@
 <h1 style="text-align: center; padding: 10px;">Каталог предметів</h1>
 
 <form method="get" class="row gy-2 gx-3 aling-items-end mb-3">
-    <input class="form-control" type="text" name="q" value="{{ q }}" placeholder="Пошук за назвою..." style="margin-left: 15%; margin-right: 15%; width: 70%;">
     <select class="form-control" name="cat" style="margin-left: 15%; margin-right: 15%; width: 70%;">
         <option value="">Всі категорії</option>
         {% for category in categories %}
