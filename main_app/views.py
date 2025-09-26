@@ -36,14 +36,13 @@ def items_detail(request, pk: int):
         instance = Rental(item=item, user=request.user)
         form = RentalForm(request.POST, instance=instance)
         if form.is_valid():
-            try:
-                with transaction.atomic():
-                    form.save()
-            except (ValidationError, IntegrityError) as e:
-                form.add_error(None, str(e))
-            else:
-                messages.success(request, "Заявка створена! Очікує підтвердження.")
-                return redirect("my_rentals")
+            rental = form.save(commit=False)
+            days = (rental.end_date - rental.start_date).days + 1
+            rental.total_price = days * item.price_per_day
+            rental.deposit_amount = item.deposit
+            rental.save()
+            messages.success(request, "Заявка створена! Очікує підтвердження.")
+            return redirect("my_rentals")
     else:
         form = RentalForm()
 
@@ -63,4 +62,4 @@ def rental_cancel(request, pk: int):
         rental.status = "cancelled"
         rental.save()
         messages.info(request, "Оренду скасовано.")
-    return redirect("my_rentals")
+    return redirect("rentals")
