@@ -36,11 +36,10 @@
                 {% endif %}
             </ul>
 
-            <!-- Пошук (якщо треба глобально) -->
             <form class="d-flex me-3" role="search" method="get" action="{% url 'main_app:items_list' %}">
                 <input class="form-control form-control-sm me-2" type="search" name="q"
                        value="{{ request.GET.q }}" placeholder="Пошук..." aria-label="Пошук">
-                <button class="btn btn-outline-light btn-sm" type="submit">OK</button>
+                <button class="btn btn-outline-light btn-sm" type="submit">Знайти</button>
             </form>
 
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -67,12 +66,12 @@
                 {% else %}
                     {% if request.resolver_match.url_name != 'login' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Увійти</a>
+                            <a class="nav-link" href="#">Увійти</a> <!-- No link -->
                         </li>
                     {% endif %}
                     {% if signup_url and request.resolver_match.url_name != 'signup' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Реєстрація</a>
+                            <a class="nav-link" href="#">Реєстрація</a> <!-- No link -->
                         </li>
                     {% endif %}
                 {% endif %}
