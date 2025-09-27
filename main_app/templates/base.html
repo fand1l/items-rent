@@ -56,7 +56,7 @@
                     {% else %}
                         {% if request.resolver_match.url_name != 'logout' %}
                             <li class="nav-item">
-                                <form action="#" method="post" class="d-inline">
+                                <form action="account/logout" method="post" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-warning btn-sm">Вийти</button>
                                 </form>
@@ -66,12 +66,12 @@
                 {% else %}
                     {% if request.resolver_match.url_name != 'login' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Увійти</a> <!-- No link -->
+                            <a class="nav-link" href="{% url 'main_app:login' %}">Увійти</a>
                         </li>
                     {% endif %}
                     {% if signup_url and request.resolver_match.url_name != 'signup' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Реєстрація</a> <!-- No link -->
+                            <a class="nav-link" href="{% url 'main_app:register' %}">Реєстрація</a>
                         </li>
                     {% endif %}
                 {% endif %}
