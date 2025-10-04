@@ -7,7 +7,7 @@ from django.core.management import execute_from_command_line
 
 IP = "0.0.0.0"
 PORT = "8000"
-DEBUG = True
+DEBUG = False
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ItemsRent.settings")
