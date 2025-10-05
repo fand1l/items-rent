@@ -8,19 +8,19 @@
 ## Структура проєкту
 main.py - Стартер для проєкту
 
-/ItemsRent - Ядро проєкту
-/ItemsRent/settings.py - Налаштування
-/ItemsRent/urls.py - Головні маршрути
+- /ItemsRent - Ядро проєкту
+- /ItemsRent/settings.py - Налаштування
+- /ItemsRent/urls.py - Головні маршрути
 
-/main_app - Додаток проєкту
-/main_app/templates/ - Шаблони html
-/main_app/admin.py - Адмін-панель
-/main_app/forms.py - Форми
-/main_app/models.py - Моделі даних
-/main_app/views.py - Логіка сторінок
-/main_app/urls.py - Маршрути
+- /main_app - Додаток проєкту
+- /main_app/templates/ - Шаблони html
+- /main_app/admin.py - Адмін-панель
+- /main_app/forms.py - Форми
+- /main_app/models.py - Моделі даних
+- /main_app/views.py - Логіка сторінок
+- /main_app/urls.py - Маршрути
 
-LICENSE - ліцензія
+- LICENSE - ліцензія
 
 ## Як запустити
 - Відкриваємо в редакторі `main.py` та налаштовуємо за необхідності
